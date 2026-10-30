@@ -26,7 +26,7 @@ projeto_calculadora/
 ├── .gitignore
 └── README.md
 ```
-➕ Explicação das Operações
+## ➕ Explicação das Operações:
 O método `calcular(int a, int b, String operador)` seleciona a operação pelo operador informado:
 Operador	Método	Descrição
 `+`	`somar`	Retorna `a + b`
@@ -36,20 +36,23 @@ Operador	Método	Descrição
 Tratamento de erros
 Divisão por zero → `IllegalArgumentException("Divisão por zero não é permitida.")`
 Operador inválido (ou nulo) → `IllegalArgumentException("Operador inválido: ...")`
-🔧 Refatorações Aplicadas
+
+## 🔧 Refatorações Aplicadas
 Extração de métodos: `somar`, `subtrair`, `multiplicar` e `dividir`.
 Simplificação de condicionais: cadeia de `if/else if` substituída por `switch`.
 Melhoria de nomes: `calc` → `calcular`, `op` → `operador`.
 Constantes para os operadores (`SOMA`, `SUBTRACAO`, `MULTIPLICACAO`, `DIVISAO`), evitando magic strings.
 Métodos puros: removido o atributo de estado `r` e os `System.out.println` de dentro da lógica de cálculo.
 Erros por exceção em vez de retornar `0` silenciosamente.
-▶️ Como Executar
+
+
+## ▶️ Como Executar
 ```bash
 cd src
 javac -encoding UTF-8 -d ../out calculadora/*.java
 java -cp ../out calculadora.TesteCalculadora
 ```
-📖 Gerar o JavaDoc
+## 📖 Gerar o JavaDoc
 ```bash
 cd src
 javadoc -encoding UTF-8 -docencoding UTF-8 -charset UTF-8 -author -version -private -d ../docs -sourcepath . calculadora
