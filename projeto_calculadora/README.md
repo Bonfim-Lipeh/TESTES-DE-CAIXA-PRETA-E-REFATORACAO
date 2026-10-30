@@ -1,15 +1,16 @@
-# projeto_calculadora — Branch `main`
+# projeto_calculadora — Branch `Refatoracao`
 
 ## 📌 Descrição do Projeto
-Módulo de calculadora em Java desenvolvido para a startup fictícia **FinançApp** (aplicativo mobile de controle de finanças pessoais). Serve como motor de cálculos para funcionalidades como orçamento mensal, divisão de despesas e projeção de economias.
+Módulo de calculadora em Java desenvolvido para a startup fictícia **FinançApp** (aplicativo mobile de controle de finanças pessoais). O módulo serve como motor de cálculos para funcionalidades como orçamento mensal, divisão de despesas e projeção de economias.
 
-Esta branch (`main`) contém a **versão original (inicial)** do projeto, com a implementação da calculadora e os testes. A versão refatorada e documentada está na branch `Refatoracao`.
+Esta branch (`Refatoracao`) contém a versão **refatorada** do código original, com tratamento de erros por exceções, testes com entrada/esperado/obtido e documentação JavaDoc completa.
 
 ## 🎯 Objetivo da Atividade
 Desenvolver a capacidade prática de construção, validação, manutenção e documentação de software, aplicando: testes funcionais, testes unitários, tratamento de erros, refatoração, documentação técnica (JavaDoc) e versionamento com Git/GitHub.
 
 ## 🛠️ Tecnologias Utilizadas
 - Java (JDK 17 ou superior)
+- JavaDoc (documentação em HTML)
 - Git e GitHub (versionamento)
 - VS Code / Eclipse IDE
 
@@ -20,77 +21,85 @@ projeto_calculadora/
 │   └── calculadora/
 │       ├── Calculadora.java
 │       └── TesteCalculadora.java
-├── imagens/
+├── docs/          <- JavaDoc gerado (abrir docs/index.html)
 ├── .gitignore
 └── README.md
 ```
 
 ## ➕ Explicação das Operações
-O método `calc(int a, int b, String op)` realiza a operação conforme o operador `op` e armazena o resultado no atributo `r`:
+O método `calcular(int a, int b, String operador)` seleciona a operação pelo operador informado:
 
-| Operador | Operação      | Comportamento                                              |
-|----------|---------------|------------------------------------------------------------|
-| `+`      | Soma          | `r = a + b`                                                |
-| `-`      | Subtração     | `r = a - b`                                                |
-| `*`      | Multiplicação | `r = a * b`                                                |
-| `/`      | Divisão       | `r = a / b`; se `b == 0`, exibe erro e retorna `0`         |
-| outro    | Inválida      | Exibe "Operacao invalida" e retorna `0`                    |
+| Operador | Método        | Descrição                                   |
+|----------|---------------|---------------------------------------------|
+| `+`      | `somar`       | Retorna `a + b`                             |
+| `-`      | `subtrair`    | Retorna `a - b`                             |
+| `*`      | `multiplicar` | Retorna `a * b`                             |
+| `/`      | `dividir`     | Retorna `a / b` (divisão inteira)           |
 
-O programa nunca é interrompido por divisão por zero ou operador inválido: uma mensagem é exibida e o resultado retornado é `0`.
+**Tratamento de erros**
+- Divisão por zero → `IllegalArgumentException("Divisão por zero não é permitida.")`
+- Operador inválido (ou nulo) → `IllegalArgumentException("Operador inválido: ...")`
+
+## 🔧 Refatorações Aplicadas
+- **Extração de métodos:** `somar`, `subtrair`, `multiplicar` e `dividir`.
+- **Simplificação de condicionais:** cadeia de `if/else if` substituída por `switch`.
+- **Melhoria de nomes:** `calc` → `calcular`, `op` → `operador`.
+- **Constantes** para os operadores (`SOMA`, `SUBTRACAO`, `MULTIPLICACAO`, `DIVISAO`), evitando *magic strings*.
+- **Métodos puros:** removido o atributo de estado `r` e os `System.out.println` de dentro da lógica de cálculo.
+- **Erros por exceção** em vez de retornar `0` silenciosamente.
 
 ## ▶️ Como Executar
 ```bash
 cd src
 javac -encoding UTF-8 -d ../out calculadora/*.java
-java -Dfile.encoding=UTF-8 -cp ../out calculadora.TesteCalculadora
+java -cp ../out calculadora.TesteCalculadora
 ```
+
+## 📖 Gerar o JavaDoc
+```bash
+cd src
+javadoc -encoding UTF-8 -docencoding UTF-8 -charset UTF-8 -author -version -private -d ../docs -sourcepath . calculadora
+```
+Depois abra `docs/index.html` no navegador.
 
 ## ✅ Resultado da Execução dos Testes
 ```
-===== TESTES DA CALCULADORA (versao original) =====
+===== TESTES DA CALCULADORA =====
 
 Teste: Soma
   Entrada  : 2 + 3
-Resultado = 5
   Esperado : 5
   Obtido   : 5
   Status   : PASSOU
 
-Teste: Subtracao
+Teste: Subtração
   Entrada  : 10 - 4
-Resultado = 6
   Esperado : 6
   Obtido   : 6
   Status   : PASSOU
 
-Teste: Multiplicacao
+Teste: Multiplicação
   Entrada  : 3 * 5
-Resultado = 15
   Esperado : 15
   Obtido   : 15
   Status   : PASSOU
 
-Teste: Divisao
+Teste: Divisão
   Entrada  : 8 / 2
-Resultado = 4
   Esperado : 4
   Obtido   : 4
   Status   : PASSOU
 
-Teste: Divisao por zero
+Teste: Divisão por zero
   Entrada  : 8 / 0
-Erro: divisao por zero, operação irregular
-Resultado = 0
-  Esperado : 0
-  Obtido   : 0
+  Esperado : Divisão por zero não é permitida.
+  Obtido   : Divisão por zero não é permitida.
   Status   : PASSOU
 
-Teste: Operacao invalida
+Teste: Operação inválida
   Entrada  : 5 x 5
-Operacao invalida
-Resultado = 0
-  Esperado : 0
-  Obtido   : 0
+  Esperado : Operador inválido: x
+  Obtido   : Operador inválido: x
   Status   : PASSOU
 
 ===== RESUMO =====
@@ -101,9 +110,9 @@ Aprovados: 6 | Reprovados: 0
 <!-- SUBSTITUA pela imagem do seu terminal: coloque o arquivo em /imagens e ajuste o nome -->
 ![Print dos testes](imagens/print_testes.png)
 
-## 🌿 Branches
-- `main`: versão original (esta).
-- `Refatoracao`: código refatorado, JavaDoc e pasta `docs/`.
+## 📚 Print da Documentação JavaDoc
+<!-- SUBSTITUA pela imagem do seu index.html aberto no navegador -->
+![Print do JavaDoc](imagens/print_javadoc.png)
 
 ## 🔗 Link do Repositório
 <!-- SUBSTITUA pelo link do seu repositório -->
