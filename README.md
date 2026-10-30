@@ -1,10 +1,16 @@
-projeto_calculadora — Branch `Refatoracao`
-📌 Descrição do Projeto
+## Projeto_calculadora — Branch `Refatoracao`
+
+
+## 📌 Descrição do Projeto
 Módulo de calculadora em Java desenvolvido para a startup fictícia FinançApp (aplicativo mobile de controle de finanças pessoais). O módulo serve como motor de cálculos para funcionalidades como orçamento mensal, divisão de despesas e projeção de economias.
 Esta branch (`Refatoracao`) contém a versão refatorada do código original, com tratamento de erros por exceções, testes com entrada/esperado/obtido e documentação JavaDoc completa.
-🎯 Objetivo da Atividade
+
+
+## 🎯 Objetivo da Atividade
 Desenvolver a capacidade prática de construção, validação, manutenção e documentação de software, aplicando: testes funcionais, testes unitários, tratamento de erros, refatoração, documentação técnica (JavaDoc) e versionamento com Git/GitHub.
-🛠️ Tecnologias Utilizadas
+
+
+## 🛠️ Tecnologias Utilizadas
 Java (JDK 17 ou superior)
 JavaDoc (documentação em HTML)
 Git e GitHub (versionamento)
